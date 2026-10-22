@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from GUI.waveform_gui import WaveformMixin
+from Audio.export_txt import ExportTXTMixin
 
 
-class SekvencerMixin(WaveformMixin):
+class SekvencerMixin(WaveformMixin, ExportTXTMixin):
     def vytvor_sekvencer(self, rodic):
         ttk.Label(
             rodic,
@@ -88,6 +89,12 @@ class SekvencerMixin(WaveformMixin):
             tlacitka,
             text="Uložit WAV",
             command=self.ulozit
+        ).pack(side="left", padx=3)
+
+        ttk.Button(
+            tlacitka,
+            text="Export TXT",
+            command=self.exportovat_txt
         ).pack(side="left", padx=3)
 
         self.info = ttk.Label(
