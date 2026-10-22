@@ -1,9 +1,18 @@
 import math
 
+
+#-----------------------------------------------------------
+# Základní konstanty
+#-----------------------------------------------------------
+
 OUTPUT_RATE = 44100
 MAX_SECONDS = 120
 NAZVY_TONU = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"]
 TVARY = ["Sinusová", "Obdélníková", "Trojúhelníková", "Pilová"]
+
+#-----------------------------------------------------------
+# Určování tónů
+#-----------------------------------------------------------
 
 def nazev_tonu(midi):
     return NAZVY_TONU[midi % 12] + str(midi // 12 - 1)
@@ -21,9 +30,11 @@ def nejblizsi_ton(frekvence):
 
     return nazev_tonu(midi), odchylka
 
-def vytvor_vlnu(pocet, hloubka, tvar):
-    """Vrátí jednu periodu jako seznam neznaménkových PCM hodnot."""
+#-----------------------------------------------------------
+# Vlna jako perioda z PCM hodnot
+#-----------------------------------------------------------
 
+def vytvor_vlnu(pocet, hloubka, tvar):
     maximum = 2 ** hloubka - 1
     hodnoty = []
 

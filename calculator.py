@@ -1,10 +1,12 @@
 import math
 import tkinter as tk
 from tkinter import ttk, messagebox
-from pcm import NAZVY_TONU, TVARY, nazev_tonu, frekvence_tonu, nejblizsi_ton, vytvor_vlnu
+from pcm import TVARY, nazev_tonu, frekvence_tonu, nejblizsi_ton, vytvor_vlnu
 
 class KalkulackaMixin:
-
+    # -----------------------------------------------------------
+    # GUI kalkulačky
+    # -----------------------------------------------------------
     def vytvor_kalkulacku(self, rodic):
             panel = ttk.Frame(rodic)
             panel.pack(fill="both", expand=True)

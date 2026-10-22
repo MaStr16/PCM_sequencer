@@ -5,6 +5,8 @@ import tempfile
 import wave
 from tkinter import filedialog, messagebox
 from pcm import OUTPUT_RATE, MAX_SECONDS
+
+# winsound není dostupný na Linuxu
 try:
     import winsound
 except ImportError:
@@ -49,13 +51,14 @@ class ZvukMixin:
         # Opakování celé skladby
         vsechny_vzorky *= opakovani_vsech
 
-        # Převzorkování na výstupních 44 100 Hz
+        # Převzorkování na výstupních 44 100 Hz (pro wav)
         pocet_vystupnich = round(
             len(vsechny_vzorky) * OUTPUT_RATE / fs
         )
 
         data = bytearray()
 
+        # zero-order hold metoda
         for i in range(pocet_vystupnich):
             index = i * fs // OUTPUT_RATE
             index = min(index, len(vsechny_vzorky) - 1)
@@ -78,7 +81,9 @@ class ZvukMixin:
 
         return buffer.getvalue()
 
-
+    # -----------------------------------------------------------
+    # Metoda se spustí po kliknutí na Přehrát v GUI
+    # -----------------------------------------------------------
     def prehrat(self):
             if winsound is None:
                 messagebox.showerror(
@@ -87,7 +92,8 @@ class ZvukMixin:
                     "pouze ve Windows."
                 )
                 return
-    
+
+            # Vytvoření cesty k dočasnému souboru
             try:
                 self.zastavit()
                 data = self.vytvor_wav_data()

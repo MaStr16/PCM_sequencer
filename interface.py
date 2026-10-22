@@ -41,6 +41,7 @@ class RozhraniMixin:
         self.vytvor_sekvencer(levy)
         self.vytvor_kalkulacku(pravy)
 
+        # Defaultní zvuk (Concerning hobbits)
         self.pridej_usek(
             "10000000 10011010 10110011 11001010 11011110 11101110 11111001 11111110 11111110"
             " 11111001 11101110 11011110 11001010 10110011 10011010 10000000 01100101 01001100"
@@ -98,6 +99,10 @@ class RozhraniMixin:
         )
         ramecek.pack(fill="x")
 
+        # -----------------------------------------------------------
+        # Výběr bitové hloubky
+        # -----------------------------------------------------------
+
         ttk.Label(
             ramecek, text="Bitová hloubka:"
         ).grid(row=0, column=0, padx=5, sticky="w")
@@ -114,6 +119,11 @@ class RozhraniMixin:
             ramecek, text="Vzorkovací frekvence:"
         ).grid(row=0, column=2, padx=(20, 5))
 
+
+        # -----------------------------------------------------------
+        # Vzorkovací frekvence
+        # -----------------------------------------------------------
+
         ttk.Spinbox(
             ramecek,
             from_=1,
@@ -126,12 +136,19 @@ class RozhraniMixin:
             ramecek, text="Opakování celé skladby:"
         ).grid(row=0, column=4, padx=(20, 5))
 
+        # -----------------------------------------------------------
+        # Opakování skladby
+        # -----------------------------------------------------------
+
         ttk.Entry(
             ramecek,
             textvariable=self.opakovani_vsech,
             width=10
         ).grid(row=0, column=5, padx=5)
 
+        # -----------------------------------------------------------
+        # Doplňková informace o výstupním formátu
+        # -----------------------------------------------------------
         ttk.Label(
             ramecek,
             text="Výstupní WAV: mono, 16 bitů, 44 100 Hz"
@@ -147,6 +164,9 @@ class RozhraniMixin:
             font=("Arial", 12, "bold")
         ).pack(anchor="w", pady=(5, 8))
 
+        # -----------------------------------------------------------
+        # Oblast pro vkládání kontejnerů
+        # -----------------------------------------------------------
         oblast = ttk.Frame(rodic)
         oblast.pack(fill="both", expand=True)
 
@@ -168,6 +188,9 @@ class RozhraniMixin:
             yscrollcommand=scrollbar.set
         )
 
+        # -----------------------------------------------------------
+        # Vložení kontejneru do Canvas
+        # -----------------------------------------------------------
         self.kontejner = ttk.Frame(self.canvas)
 
         self.okno = self.canvas.create_window(
@@ -190,6 +213,9 @@ class RozhraniMixin:
             )
         )
 
+        # -----------------------------------------------------------
+        # Ovládací tlačítka
+        # -----------------------------------------------------------
         tlacitka = ttk.Frame(rodic)
         tlacitka.pack(fill="x", pady=10)
 
@@ -222,6 +248,9 @@ class RozhraniMixin:
         )
         self.info.pack(anchor="w", pady=5)
 
+    # -----------------------------------------------------------
+    # Přidání úseku
+    # -----------------------------------------------------------
     def pridej_usek(self, text=None, opakovani="1"):
         cislo = len(self.useky) + 1
 
@@ -264,6 +293,9 @@ class RozhraniMixin:
             width=12
         ).pack(side="left", padx=8)
 
+        # -----------------------------------------------------------
+        # Uložení úseku do datové struktury
+        # -----------------------------------------------------------
         usek = {
             "ramecek": ramecek,
             "editor": editor,
@@ -278,6 +310,9 @@ class RozhraniMixin:
             command=lambda: self.odstran_usek(usek)
         ).pack(side="right")
 
+        # -----------------------------------------------------------
+        # Sledování změn
+        # -----------------------------------------------------------
         editor.bind(
             "<<Modified>>", self.zmena_textu
         )
@@ -307,6 +342,9 @@ class RozhraniMixin:
 
         self.naplanovat_aktualizaci()
 
+    # -----------------------------------------------------------
+    # Reakce na změnu textu
+    # -----------------------------------------------------------
     def zmena_textu(self, event):
         editor = event.widget
 
@@ -314,6 +352,9 @@ class RozhraniMixin:
             editor.edit_modified(False)
             self.naplanovat_aktualizaci()
 
+    # -----------------------------------------------------------
+    # Přeskupení bitů na n-tice dle zvolené bitové hloubky
+    # -----------------------------------------------------------
     def preskup_bity(self, *args):
         if self._meni_bity:
             return
@@ -430,6 +471,9 @@ class RozhraniMixin:
         maximum = 2 ** hloubka - 1
         hodnoty = []
 
+        # -----------------------------------------------------------
+        # Ověření platnosti úseku
+        # -----------------------------------------------------------
         for skupina in skupiny:
             if (
                 len(skupina) != hloubka
