@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from pcm import TVARY, nazev_tonu
-from calculator_logic import analyzuj_usek, delka_skladby, vypocitej_ton
+from Logic.pcm import TVARY, nazev_tonu
+from Logic.calculator_logic import analyzuj_usek, delka_skladby, vypocitej_ton
 
 
 class KalkulackaMixin:

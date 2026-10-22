@@ -1,7 +1,7 @@
 import tkinter as tk
-from interface import RozhraniMixin
-from calculator import KalkulackaMixin
-from sound import ZvukMixin
+from GUI.interface import RozhraniMixin
+from GUI.calculator import KalkulackaMixin
+from Audio.sound import ZvukMixin
 
 
 class PCMSequencer(RozhraniMixin, KalkulackaMixin, ZvukMixin):

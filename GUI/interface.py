@@ -1,7 +1,7 @@
 from tkinter import ttk
 from sequencer_gui import SekvencerMixin
-from input_logic import VstupyMixin
-from pcm import OUTPUT_RATE
+from Logic.input_logic import VstupyMixin
+from Logic.pcm import OUTPUT_RATE
 
 class RozhraniMixin(SekvencerMixin, VstupyMixin):
     def vytvor_gui(self):

@@ -4,7 +4,7 @@ import struct
 import tempfile
 import wave
 from tkinter import filedialog, messagebox
-from pcm import OUTPUT_RATE, MAX_SECONDS
+from Logic.pcm import OUTPUT_RATE, MAX_SECONDS
 
 # winsound není dostupný na Linuxu
 try:
