@@ -12,7 +12,7 @@ class PCMSequencer(RozhraniMixin, KalkulackaMixin, ZvukMixin):
         self.root.minsize(1050, 620)
     
         self.bity = tk.IntVar(value=8)
-        self.frekvence = tk.StringVar(value="20000")
+        self.frekvence = tk.StringVar(value="21000")
         self.opakovani_vsech = tk.StringVar(value="1")
     
         self.delka_tonu = tk.StringVar(value="0.5")

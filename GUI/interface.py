@@ -8,20 +8,6 @@ class RozhraniMixin(SekvencerMixin, VstupyMixin):
         hlavni = ttk.Frame(self.root, padding=12)
         hlavni.pack(fill="both", expand=True)
 
-        ttk.Label(
-            hlavni,
-            text="PCM sekvencer",
-            font=("Arial", 20, "bold")
-        ).pack(anchor="w")
-
-        ttk.Label(
-            hlavni,
-            text=(
-                "Vytvářej zvuk z binárních PCM vzorků. "
-                "Vpravo zjistíš, jak zapsat konkrétní hudební tón."
-            )
-        ).pack(anchor="w", pady=(4, 10))
-
         self.vytvor_nastaveni(hlavni)
 
         panely = ttk.PanedWindow(
@@ -86,7 +72,7 @@ class RozhraniMixin(SekvencerMixin, VstupyMixin):
             " 11111001 11101110 11011110 11001010 10110011 10011010 10000000 01100101 01001100"
             " 00110101 00100001 00010001 00000110 00000001 00000001 00000110 00010001 00100001"
             " 00110101 01001100 01100101 ",
-            "600"
+            "1200"
         )
 
 
@@ -187,13 +173,13 @@ class RozhraniMixin(SekvencerMixin, VstupyMixin):
         self.frekvence.trace_add("write", self.aktualizuj_hlavicku)
         self.aktualizuj_hlavicku()
 
+    # Zobrazí zvolenou frekvenci a hloubku jako pole hlavičky wav
     def aktualizuj_hlavicku(self, *args):
-        """Zobrazí zvolenou frekvenci a hloubku jako pole hlavičky WAV."""
         try:
             fs = int(self.frekvence.get())
             if not 1 <= fs <= OUTPUT_RATE:
                 raise ValueError
-            # WAV ukládá vícebajtová čísla od nejméně významného bajtu.
+            # wav ukládá vícebajtová čísla od nejméně významného bajtu.
             b = fs.to_bytes(4, byteorder="little")
             frekvence_bity = " ".join(f"{bajt:08b}" for bajt in b)
             self.hlavicka_frekvence.configure(
