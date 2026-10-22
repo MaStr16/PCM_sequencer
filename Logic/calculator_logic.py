@@ -1,5 +1,5 @@
 import math
-from pcm import frekvence_tonu, nejblizsi_ton, vytvor_vlnu
+from Logic.pcm import frekvence_tonu, nejblizsi_ton, vytvor_vlnu
 
 
 def analyzuj_usek(pocet_vzorku, opakovani, fs):

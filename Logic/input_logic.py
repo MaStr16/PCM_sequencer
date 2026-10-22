@@ -1,5 +1,5 @@
 import math
-from pcm import OUTPUT_RATE
+from Logic.pcm import OUTPUT_RATE
 
 
 class VstupyMixin:

@@ -1,5 +1,5 @@
 from tkinter import ttk
-from sequencer_gui import SekvencerMixin
+from GUI.sequencer_gui import SekvencerMixin
 from Logic.input_logic import VstupyMixin
 from Logic.pcm import OUTPUT_RATE
 
