@@ -3,49 +3,6 @@ from Logic.pcm import OUTPUT_RATE
 
 
 class VstupyMixin:
-    # -----------------------------------------------------------
-    # Přeskupení bitů na n-tice dle zvolené bitové hloubky
-    # -----------------------------------------------------------
-    def preskup_bity(self, *args):
-        if self._meni_bity:
-            return
-
-        self._meni_bity = True
-
-        try:
-            hloubka = self.bity.get()
-
-            for usek in self.useky:
-                editor = usek["editor"]
-
-                proud = "".join(
-                    editor.get("1.0", "end").split()
-                )
-
-                if any(c not in "01" for c in proud):
-                    continue
-
-                skupiny = [
-                    proud[i:i + hloubka]
-                    for i in range(
-                        0, len(proud), hloubka
-                    )
-                ]
-
-                if skupiny:
-                    skupiny[-1] = skupiny[-1].ljust(
-                        hloubka, "0"
-                    )
-
-                editor.delete("1.0", "end")
-                editor.insert(
-                    "1.0", " ".join(skupiny)
-                )
-
-        finally:
-            self._meni_bity = False
-
-        self.naplanovat_aktualizaci()
 
     def nacti_fs(self):
         try:

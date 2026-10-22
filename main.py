@@ -20,11 +20,8 @@ class PCMSequencer(RozhraniMixin, KalkulackaMixin, ZvukMixin):
     
         self.useky = []
         self._aktualizace_id = None
-        self._meni_bity = False
-    
+
         self.vytvor_gui()
-    
-        self.bity.trace_add("write", self.preskup_bity)
     
         for promenna in (
             self.frekvence,

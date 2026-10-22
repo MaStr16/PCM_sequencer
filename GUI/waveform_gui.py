@@ -127,9 +127,7 @@ class WaveformMixin:
 
         graf.create_line(left, mid, konec, mid, fill="#a0a0a0", dash=(3, 3))
         graf.create_line(left, y_top, left, y_bottom, fill="#777777")
-        graf.create_text(left - 4, y_top, text="+1", anchor="e", font=("Arial", 7))
         graf.create_text(left - 4, mid, text="0", anchor="e", font=("Arial", 7))
-        graf.create_text(left - 4, y_bottom, text="−1", anchor="e", font=("Arial", 7))
 
         try:
             vsechny_vzorky = self.nacti_vzorky(usek["editor"])
