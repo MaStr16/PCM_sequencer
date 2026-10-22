@@ -153,3 +153,63 @@ class RozhraniMixin(SekvencerMixin, VstupyMixin):
             row=1, column=0, columnspan=6,
             sticky="w", pady=(10, 0)
         )
+
+        # -----------------------------------------------------------
+        # Bitové zobrazení zvolených parametrů hlavičky WAV
+        # -----------------------------------------------------------
+        hlavicka = ttk.LabelFrame(
+            ramecek, text="Hlavička – zvolené parametry", padding=8
+        )
+        hlavicka.grid(
+            row=0, column=6, rowspan=2,
+            padx=(30, 5), sticky="nsew"
+        )
+        ramecek.columnconfigure(6, weight=1)
+
+        self.hlavicka_frekvence = ttk.Label(
+            hlavicka, font=("Consolas", 10), justify="left"
+        )
+        self.hlavicka_frekvence.pack(anchor="w")
+
+        self.hlavicka_hloubka = ttk.Label(
+            hlavicka, font=("Consolas", 10), justify="left"
+        )
+        self.hlavicka_hloubka.pack(anchor="w", pady=(4, 0))
+
+        ttk.Label(
+            hlavicka,
+            text="Výuková ukázka polí WAV (little-endian); "
+                 "skutečný export má 16 bitů / 44 100 Hz.",
+            foreground="gray", wraplength=430
+        ).pack(anchor="w", pady=(5, 0))
+
+        self.bity.trace_add("write", self.aktualizuj_hlavicku)
+        self.frekvence.trace_add("write", self.aktualizuj_hlavicku)
+        self.aktualizuj_hlavicku()
+
+    def aktualizuj_hlavicku(self, *args):
+        """Zobrazí zvolenou frekvenci a hloubku jako pole hlavičky WAV."""
+        try:
+            fs = int(self.frekvence.get())
+            if not 1 <= fs <= OUTPUT_RATE:
+                raise ValueError
+            # WAV ukládá vícebajtová čísla od nejméně významného bajtu.
+            b = fs.to_bytes(4, byteorder="little")
+            frekvence_bity = " ".join(f"{bajt:08b}" for bajt in b)
+            self.hlavicka_frekvence.configure(
+                text=f"Frekvence ({fs} Hz): {frekvence_bity}"
+            )
+        except (ValueError, OverflowError):
+            self.hlavicka_frekvence.configure(text="Frekvence: neplatná hodnota")
+
+        try:
+            hloubka = int(self.bity.get())
+            if hloubka not in (1, 2, 3, 4, 8, 16):
+                raise ValueError
+            b = hloubka.to_bytes(2, byteorder="little")
+            hloubka_bity = " ".join(f"{bajt:08b}" for bajt in b)
+            self.hlavicka_hloubka.configure(
+                text=f"Hloubka ({hloubka} bitů): {hloubka_bity}"
+            )
+        except (ValueError, OverflowError):
+            self.hlavicka_hloubka.configure(text="Hloubka: neplatná hodnota")
