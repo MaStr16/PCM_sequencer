@@ -258,6 +258,7 @@ class KalkulackaMixin:
         self._aktualizace_id = None
         self.aktualizuj_useky()
         self.aktualizuj_binarni_kalkulacku()
+        self.aktualizuj_grafy_useku()
 
     def aktualizuj_useky(self):
         vyber = self.tabulka_useku.selection()

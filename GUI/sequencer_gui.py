@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from GUI.waveform_gui import WaveformMixin
 
 
-class SekvencerMixin:
+class SekvencerMixin(WaveformMixin):
     def vytvor_sekvencer(self, rodic):
         ttk.Label(
             rodic,
@@ -107,17 +108,24 @@ class SekvencerMixin:
         )
         ramecek.pack(fill="x", pady=5)
 
+        # Editor vlevo a graf vlny vpravo v jednom úseku.
+        obsah = ttk.Frame(ramecek)
+        obsah.pack(fill="both", expand=True)
+        leva_cast = ttk.Frame(obsah)
+        leva_cast.pack(side="left", fill="both", expand=True)
+
         ttk.Label(
-            ramecek, text="Binární vzorky:"
+            leva_cast, text="Binární vzorky:"
         ).pack(anchor="w")
 
         editor = tk.Text(
-            ramecek,
+            leva_cast,
             height=4,
-            font=("Consolas", 11),
+            width=35,
+            font=("Consolas", 8),
             wrap="word"
         )
-        editor.pack(fill="x", pady=5)
+        editor.pack(fill="both", expand=True, pady=5)
 
         if text is None:
             text = "0" * self.bity.get()
@@ -149,6 +157,8 @@ class SekvencerMixin:
         }
 
         self.useky.append(usek)
+        self.vytvor_graf_useku(obsah, usek)
+        self.aktualizuj_graf_useku(usek)
 
         ttk.Button(
             dolni,
